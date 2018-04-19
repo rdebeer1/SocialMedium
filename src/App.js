@@ -5,14 +5,12 @@ import Paper from 'material-ui/Paper';
 import { RaisedButton } from 'material-ui';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
-import { List, ListItem } from 'material-ui/List';
 import { Alert } from 'antd';
 import {fullBlack, white } from 'material-ui/styles/colors';
 import Images from './components/Images.js'
 import Artists from './components/Artists.js'
+import Details from './components/Details.js'
 import './App.css';
 const config = require('./config.js');
 
@@ -47,30 +45,16 @@ class App extends Component {
     events: [],
     images: [],
     artist: [],
-    eventName: [],
-    localDate: [],
-    localTime: [],
-    ticketStatus: [],
-    minPrice: [],
-    maxPrice: [],
-    promoter: [],
-    venue: [],
-    url: [],
-    eventId: null,
-    open: false,
   }
   urls = {
     root: 'https://app.ticketmaster.com/discovery/v2/'
   }
 
-  handleToggle = () => 
-    this.setState({ 
-    open: !this.state.open 
-    });
   handleClose = () => 
     this.setState({ 
       open: false 
     });
+
   handleOpen = (name) => {
     this.setState({
       [name]: true,
@@ -152,69 +136,6 @@ class App extends Component {
           artist: artist,
         })
       })
-  }
-
-  getEventDetails = (event_base_url) => {
-    let url = 'https://app.ticketmaster.com' + event_base_url + `&apikey=${config.MY_API_TOKEN}`
-    var myInit = {
-      method: 'GET',
-      cache: 'default',
-      dataType: 'json',
-    }
-    fetch(url, myInit)
-      .then((res) => res.json())
-      .then((data) => {
-        let result = []
-        result.push(data)
-        let minPrice = []
-        let maxPrice = []
-        let promoter = []
-        let venue = []
-        let checkPrices = result.map(check => {
-          if (!check.priceRanges) {
-            minPrice.push('N/A') && maxPrice.push('N/A')
-          } else {
-            minPrice.push(check.priceRanges[0].min) && maxPrice.push(check.priceRanges[0].max)
-          }
-          return checkPrices;
-        })
-        let checkPromoter = result.map(check => {
-            if (!check.promoter) {
-              promoter.push('N/A')
-            } else {
-              promoter.push(check.promoter.name)
-            }
-            return  checkPromoter;
-        })
-        let checkVenue = result.map(check => {
-          if (!check._embedded.venues) {
-            venue.push('TBD')
-          } else {
-            venue.push(check._embedded.venues[0].name)
-          }
-          return checkVenue;
-        })
-        this.setState({
-          check: data,
-          eventName: data.name,
-          localDate: data.dates.start.localDate,
-          localTime: data.dates.start.localTime,
-          ticketStatus: data.dates.status.code,
-          minPrice: minPrice,
-          maxPrice: maxPrice,
-          promoter: promoter,
-          venue: venue,
-          url: data.url
-        })
-      })
-  }
-
-  handleEventClick = (event_base_url) => {
-    console.log(event_base_url);
-    this.setState({
-      eventId: event_base_url,
-    });
-    this.getEventDetails(event_base_url);
   }
 
   submitSignUp = (username, password, passwordConfirm, email) => {
@@ -394,14 +315,9 @@ class App extends Component {
 
   render() {
     const { images } = this.state
-    const { eventName } = this.state
-    const { localDate } = this.state
-    const { ticketStatus } = this.state
-    const { minPrice } = this.state
-    const { maxPrice } = this.state
-    const { promoter } = this.state
-    const { venue } = this.state
-    const { url } = this.state
+    const { artist } = this.state
+    const { events } = this.state
+
     const styles = { 
       app: {
         backgroundColor: 'white',
@@ -415,7 +331,7 @@ class App extends Component {
         fontWeight: '100',
         textTransform: 'uppercase',
       },
-      image: {
+      logoImage: {
         height: 55,
         alignItems: 'center',
         marginTop: '.25em'
@@ -439,22 +355,6 @@ class App extends Component {
         display: 'inline-flex',
         flexDirection: 'column',
       },
-      artistFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-        textAlign: 'center',
-        flex: 1,
-      },
-      artistDiv: {
-        flex: 1
-      },
-      artist: {
-        marginTop: '.25em',
-        fontSize: '1.25em',
-        color: 'black',
-        cursor: 'default',
-        fontWeight: '300',
-      },
       buttonFlex: {
         display: 'flex',
         flexDirection: 'row',
@@ -472,44 +372,6 @@ class App extends Component {
       },
       reactCard: {
         position: 'none',
-      },
-      drawerContainer: {
-        height: '100vh',
-        background: 'white',
-        textAlign: 'left',
-        overflow: 'hidden'
-      },
-      drawerDivs: {
-        fontSize: '1em',
-        fontWeight: '400',
-        color: 'black',
-        textAlign: 'left',
-      },
-      buyTickets: {
-        fontSize: '1em',
-        fontWeight: '700',
-        color: 'black',
-        textAlign: 'center',
-      },
-      drawerSpans: {
-        fontSize: '1em',
-        fontWeight: '100',
-        color: 'black',
-        itemAlign: 'center',
-        marginLeft: '.5em',
-        display: 'inline-block'
-      },
-      drawerStyle: {
-        background: 'white',
-        borderLeft: 'solid 1px',
-        borderColor: 'black',
-      },
-      eventDrawer: {
-        fontSize: '1.25em',
-        fontWeight: '400',
-        color: 'black',
-        textAlign: 'center',
-        margin: '1em'
       },
       form: {
         flex: 1,
@@ -745,37 +607,6 @@ class App extends Component {
       />,
     ];
 
-    let artist = this.state.artist.map((artists, key) => {
-      return <div key={'artists' + key} style={styles.artistDiv}> 
-        <span style={styles.artist}>{artists}</span>
-       </div>
-    })
-
-    let events = this.state.events.map((next, key) =>{
-      return <div style={styles.buttonDiv} key={'next' + key} onClick={() => this.handleEventClick(next._links.self.href)}>
-       <i style={styles.button} onClick={this.handleToggle} className="material-icons" >info_outline</i>
-      </div>
-    })
-
-    let time = this.state.localTime.toString()
-    let splitTime = time.split(':')
-    let hours = Number(splitTime[0]);
-    let minutes = Number(splitTime[1]);
-    let seconds = Number(splitTime[2]);
-    let timeValue;
-    if (hours > 0 && hours <= 12) {
-      timeValue = "" + hours;
-    } else if (hours > 12) {
-      timeValue = "" + (hours - 12);
-    }
-    else if (hours === 0) {
-      timeValue = "12";
-    }
-
-    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes; 
-    timeValue += (seconds < 10) ? "": ":" + seconds;  
-    timeValue += (hours >= 12) ? " P.M." : " A.M."; 
-
     return (
       <div className="App" style={styles.app}>
         <MuiThemeProvider>
@@ -831,7 +662,7 @@ class App extends Component {
             />
             <div style={styles.logoScroll}>
               <div style={styles.logo}>
-                <div> Social Medium <img style={styles.image} src='https://i.imgur.com/rkPGtDE.png' alt=''/></div>
+                <div> Social Medium <img style={styles.logoImage} src='https://i.imgur.com/rkPGtDE.png' alt=''/></div>
               </div>
             </div>
             <form style={styles.form} noValidate autoComplete='off'>
@@ -842,80 +673,9 @@ class App extends Component {
               <div style={styles.container}>
                 <Paper style={styles.paper} zDepth={1} rounded={false}>
                 <Images images={images} />
-                <div style={styles.buttonFlex}>
-                  {events}
-                </div>
+                <Details details={events} />
                 <Artists artist={artist} />
                 </Paper>
-                <Drawer style={styles.drawerStyle} containerStyle={styles.drawerStyle} docked={false} onRequestChange={(open) => this.setState({ open })} width={'30%'} openSecondary={true} open={this.state.open}>
-                  <div style={styles.drawerContainer}>
-                    <div style={styles.eventDrawer}>
-                    {eventName}
-                    </div>
-                    <Divider/>
-                    <List>
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Date: 
-                      <span style={styles.drawerSpans}>
-                      {localDate}
-                      </span>
-                    </div>
-                    </ListItem>
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Time:
-                      <span style={styles.drawerSpans}>
-                      {timeValue}
-                      </span>
-                    </div>
-                    </ListItem>
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Tickets: 
-                      <span style={styles.drawerSpans}>
-                      {ticketStatus}
-                      </span>
-                    </div>
-                    </ListItem> 
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Ticket Prices:
-                      <span style={styles.drawerSpans}>
-                      $ {minPrice} - $ {maxPrice}
-                      </span>
-                    </div>
-                    </ListItem>
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Promoter:
-                      <span style={styles.drawerSpans}>
-                      {promoter}
-                      </span>
-                    </div>
-                    </ListItem>
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} disabled={true}>
-                    <div style={styles.drawerDivs}>
-                    Venue:
-                      <span style={styles.drawerSpans}>
-                      {venue}
-                      </span>
-                    </div>
-                    </ListItem>
-                    <Divider inset={true} />
-                    <ListItem insetChildren={true} target="_blank" href={url}>
-                    <div style={styles.buyTickets}>
-                      Buy Tickets
-                    </div>
-                    </ListItem>
-                    </List>
-                  </div>
-                </Drawer>
               </div> 
               <script type="text/javascript" src="http://api.eventful.com/js/api"></script>
             </div>
