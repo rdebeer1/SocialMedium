@@ -306,7 +306,7 @@ class HandleUser extends Component {
         label='Cancel'
         color={fullBlack}
         onClick={(e) => {
-          this.handleClose.bind('openLogin'); 
+          this.handleClose('openLogin'); 
           this.clearUserInput();
         }}
       />,
@@ -453,7 +453,7 @@ class HandleUser extends Component {
         color={fullBlack}
         onClick={(e) => { 
           this.handleClose('openSignUp'); 
-          this.clearUserInput() 
+          this.clearUserInput();
         }}
       />,
       <FlatButton
