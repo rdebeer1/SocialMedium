@@ -283,7 +283,11 @@ class HandleUser extends Component {
         floatingLabelStyle={{ color: 'black' }}
         type='text'
         fullWidth={true}
-        onChange={(e) => { this.setState({ loginUsername: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            loginUsername: e.target.value 
+          }) 
+        }}
       />, <br />,
       <TextField
         floatingLabelText='Password'
@@ -292,28 +296,41 @@ class HandleUser extends Component {
         floatingLabelStyle={{ color: 'black' }}
         type='password'
         fullWidth={true}
-        onChange={(e) => { this.setState({ loginPassword: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            loginPassword: e.target.value 
+          }) 
+        }}
       />,
       <FlatButton
         label='Cancel'
         color={fullBlack}
         onClick={(e) => {
-          this.handleClose.bind('openLogin');
+          this.handleClose.bind('openLogin'); 
+          this.clearUserInput();
         }}
       />,
       <FlatButton
         label='Submit'
         color={fullBlack}
         keyboardFocused={false}
-        onClick={(e) => { e.preventDefault(); this.submitLogin(this.state.loginUsername, this.state.loginPassword) }}
+        onClick={(e) => { 
+          e.preventDefault(); 
+          this.submitLogin(this.state.loginUsername, this.state.loginPassword) 
+        }}
       />,
       <FlatButton
         label='Forgot Password?'
         color={fullBlack}
         keyboardFocused={false}
-        onClick={() => { this.setState({ openForgotPassword: true }) }}
+        onClick={() => { 
+          this.setState({ 
+            openForgotPassword: true 
+          }) 
+        }}
       />
     ];
+
     const signUp = [
       this.state.blankUsernameError ?
         <Alert
@@ -386,7 +403,11 @@ class HandleUser extends Component {
         underlineFocusStyle={{ borderColor: 'black' }}
         floatingLabelStyle={{ color: 'black' }}
         fullWidth={true}
-        onChange={(e) => { this.setState({ signupUsername: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            signupUsername: e.target.value 
+          }) 
+        }}
       />, <br />,
       <TextField
         floatingLabelText='New Password'
@@ -395,7 +416,11 @@ class HandleUser extends Component {
         underlineFocusStyle={{ borderColor: 'black' }}
         floatingLabelStyle={{ color: 'black' }}
         fullWidth={true}
-        onChange={(e) => { this.setState({ signupPassword: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            signupPassword: e.target.value 
+          }) 
+        }}
       />,
       <TextField
         floatingLabelText='Confirm Password'
@@ -404,7 +429,11 @@ class HandleUser extends Component {
         underlineFocusStyle={{ borderColor: 'black' }}
         floatingLabelStyle={{ color: 'black' }}
         fullWidth={true}
-        onChange={(e) => { this.setState({ signupConfirmPassword: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            signupConfirmPassword: e.target.value 
+          }) 
+        }}
       />,
       <TextField
         floatingLabelText='Email'
@@ -413,20 +442,31 @@ class HandleUser extends Component {
         floatingLabelStyle={{ color: 'black' }}
         type='text'
         fullWidth={true}
-        onChange={(e) => { this.setState({ signupEmail: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            signupEmail: e.target.value 
+          }) 
+        }}
       />,
       <FlatButton
         label='Cancel'
         color={fullBlack}
-        onClick={(e) => { this.handleClose('openSignUp'); this.clearUserInput() }}
+        onClick={(e) => { 
+          this.handleClose('openSignUp'); 
+          this.clearUserInput() 
+        }}
       />,
       <FlatButton
         label='Submit'
         color={fullBlack}
         keyboardFocused={true}
-        onClick={(e) => { e.preventDefault(); this.submitSignUp(this.state.signupUsername, this.state.signupPassword, this.state.signupConfirmPassword, this.state.signupEmail) }}
+        onClick={(e) => { 
+          e.preventDefault(); 
+          this.submitSignUp(this.state.signupUsername, this.state.signupPassword, this.state.signupConfirmPassword, this.state.signupEmail) 
+        }}
       />,
     ];
+    
     const forgotPassword = [
       <TextField
         floatingLabelText='Email'
@@ -434,16 +474,23 @@ class HandleUser extends Component {
         underlineFocusStyle={{ borderColor: 'black' }}
         floatingLabelStyle={{ color: 'black' }}
         fullWidth={true}
-        onChange={(e) => { this.setState({ forgottenPassword: e.target.value }) }}
+        onChange={(e) => { 
+          this.setState({ 
+            forgottenPassword: e.target.value 
+          }) 
+        }}
       />,
       <FlatButton
         label='Send'
         color={fullBlack}
         onClick={(e) => {
-          this.setState({ openForgotPassword: false })
+          this.setState({ 
+            openForgotPassword: false 
+          })
         }}
       />,
     ];
+
     return (
       <div>
         {this.state.username === '' ?
@@ -461,7 +508,10 @@ class HandleUser extends Component {
           actions={signUp}
           modal={false}
           open={this.state.openSignUp}
-          onRequestClose={(e) => { this.handleClose('openSignUp'); this.clearUserInput() }}
+          onRequestClose={(e) => { 
+            this.handleClose('openSignUp'); 
+            this.clearUserInput() 
+          }}
         />
         {this.state.username === '' ?
           <RaisedButton
@@ -482,21 +532,24 @@ class HandleUser extends Component {
           actions={logIn}
           modal={false}
           open={this.state.openLogin}
-          onRequestClose={
-            (e) => {
-              this.handleClose('openLogin'); this.clearUserInput()
-            }}
+          onRequestClose={(e) => {
+            this.handleClose('openLogin'); 
+            this.clearUserInput();
+          }}
         />
         <Dialog title='Enter Your Email to Change Your Password'
           actions={forgotPassword}
           modal={false}
           open={this.state.openForgotPassword}
-          onRequestClose={
-            () => { this.setState({ openForgotPassword: false }) }
-          }
+          onRequestClose={() => { 
+            this.setState({ 
+              openForgotPassword: false 
+            }) 
+          }}
         />
       </div>
     )
   }
 }
+
 export default HandleUser;
