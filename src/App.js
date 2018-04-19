@@ -11,6 +11,7 @@ import {fullBlack, white } from 'material-ui/styles/colors';
 import Images from './components/Images.js'
 import Artists from './components/Artists.js'
 import Details from './components/Details.js'
+import Logo from './components/Logo.js'
 import './App.css';
 const config = require('./config.js');
 
@@ -331,24 +332,11 @@ class App extends Component {
         fontWeight: '100',
         textTransform: 'uppercase',
       },
-      logoImage: {
-        height: 55,
-        alignItems: 'center',
-        marginTop: '.25em'
-      },
       scroll: {
         overflow: 'auto',
         alignItems: 'center',
         display: 'flex',
         flex: 1,
-      },
-      logoScroll: {
-        overflow: 'auto',
-        textAlign: 'center',
-        alignItems: 'center',
-        display: 'flex',
-        flex: 1,
-        backgroundColor: 'white',
       },
       container: {
         flex: 1,
@@ -396,14 +384,7 @@ class App extends Component {
         paddingBottom: '.5em',
         alignItems: 'center',
         maxHeight: '100%',
-      },
-      logo: {
-        textAlign: 'center',
-        fontSize: '64px',
-        color: 'black',
-        flex: 1,
-        marginBottom: '.5em'
-      },
+      }
     }
     const logIn = [
       this.state.blankUsernameLoginError ?
@@ -660,11 +641,7 @@ class App extends Component {
                 () => { this.setState({ openForgotPassword: false }) }
               }
             />
-            <div style={styles.logoScroll}>
-              <div style={styles.logo}>
-                <div> Social Medium <img style={styles.logoImage} src='https://i.imgur.com/rkPGtDE.png' alt=''/></div>
-              </div>
-            </div>
+            <Logo />
             <form style={styles.form} noValidate autoComplete='off'>
                 <TextField style={styles.input} ref='city'type='text' id='serch' inputStyle={styles.input} underlineFocusStyle={{borderColor: 'black'}} floatingLabelStyle={styles.input} underlineStyle={{bottom: '4px', color: 'black'}} />
               <RaisedButton style={styles.formButton} buttonStyle={{ border: ' 1px solid black' }} onClick={this.getEvents} label='Search by City' labelPosition='before' icon={<i style={{color: 'black'}} className="material-icons">search</i>}/>
