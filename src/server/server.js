@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./database.js');
+const db = require('../database/database.js');
 const helpers = require('./backendHelpers.js');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');

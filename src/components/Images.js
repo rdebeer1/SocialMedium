@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-class Image extends Component {
+
+class Images extends Component {
   render () {
     const styles = {
     imgFlex: {
@@ -39,4 +40,5 @@ class Image extends Component {
     ) 
   }
 }
-export default Image;
+
+export default Images;

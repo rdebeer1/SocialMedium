@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const helpers = require('./backendHelpers.js')
+const helpers = require('../backend/backendHelpers.js')
 const db = mongoose.connect(process.env.MONGO_DATABASE);
 const dotenv = require('dotenv');
 dotenv.config();

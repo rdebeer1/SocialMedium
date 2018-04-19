@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
-const db = require('./database.js');
+const db = require('../database/database.js');
 const moment = require('moment');
 dotenv.config();
 

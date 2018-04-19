@@ -11,7 +11,8 @@ import TextField from 'material-ui/TextField';
 import { List, ListItem } from 'material-ui/List';
 import { Alert } from 'antd';
 import {fullBlack, white } from 'material-ui/styles/colors';
-import Image from './Image.js'
+import Images from './components/Images.js'
+import Artists from './components/Artists.js'
 import './App.css';
 const config = require('./config.js');
 
@@ -840,14 +841,11 @@ class App extends Component {
             <div style={styles.scroll}>
               <div style={styles.container}>
                 <Paper style={styles.paper} zDepth={1} rounded={false}>
-                <Image images={images}>
-                </Image>
+                <Images images={images} />
                 <div style={styles.buttonFlex}>
                   {events}
                 </div>
-                <div style={styles.artistFlex}>
-                  {artist}
-                </div>
+                <Artists artist={artist} />
                 </Paper>
                 <Drawer style={styles.drawerStyle} containerStyle={styles.drawerStyle} docked={false} onRequestChange={(open) => this.setState({ open })} width={'30%'} openSecondary={true} open={this.state.open}>
                   <div style={styles.drawerContainer}>
