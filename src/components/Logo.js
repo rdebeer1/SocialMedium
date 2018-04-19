@@ -24,6 +24,7 @@ class Logo extends Component {
         marginTop: '.25em'
       }
     }
+    
     return (
       <div style={styles.logoScroll}>
         <div style={styles.logo}>
