@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import HandleUser from './components/HandleUser.js'
+import SignUp from './components/SignUp.js'
+import LogIn from './components/LogIn.js'
 import Images from './components/Images.js'
 import Artists from './components/Artists.js'
 import Details from './components/Details.js'
@@ -124,7 +125,8 @@ class App extends Component {
       <div className="App" style={styles.app}>
         <MuiThemeProvider>
           <div>
-            <HandleUser getEvents={this.getEvents} />
+            <SignUp />
+            <LogIn />
             <Logo />
             <Form 
               handleFormChange={this.handleFormChange}
