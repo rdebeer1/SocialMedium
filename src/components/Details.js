@@ -248,7 +248,7 @@ class Details extends Component {
               <ListItem insetChildren={true}>
                 <div style={styles.buyTickets}>
                   Buy Tickets
-                </div>
+                    </div>
               </ListItem>
               </a>
             </List>
