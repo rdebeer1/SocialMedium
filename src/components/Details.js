@@ -148,6 +148,9 @@ class Details extends Component {
         textAlign: 'center',
         margin: '1em'
       },
+      link: {
+        textDecoration: 'none'
+      }
     }
 
     let time = this.state.localTime.toString()
@@ -241,11 +244,13 @@ class Details extends Component {
                 </div>
               </ListItem>
               <Divider inset={true} />
-              <ListItem insetChildren={true} target="_blank" href={url}>
+              <a style={styles.link} target="_blank" href={url}>
+              <ListItem insetChildren={true}>
                 <div style={styles.buyTickets}>
                   Buy Tickets
                     </div>
               </ListItem>
+              </a>
             </List>
           </div>
         </Drawer>

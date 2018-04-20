@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Paper from 'material-ui/Paper';
-import { RaisedButton } from 'material-ui';
-import TextField from 'material-ui/TextField';
+import './App.css';
+import HandleUser from './components/HandleUser.js'
 import Images from './components/Images.js'
 import Artists from './components/Artists.js'
 import Details from './components/Details.js'
-import HandleUser from './components/HandleUser.js'
+import Form from './components/Form.js'
 import Logo from './components/Logo.js'
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
+import axios from 'axios';
 const config = require('./config.js');
 
 class App extends Component {
@@ -17,13 +16,20 @@ class App extends Component {
     events: [],
     images: [],
     artist: [],
+    input: null
   }
   urls = {
     root: 'https://app.ticketmaster.com/discovery/v2/'
   }
 
+  handleFormChange = (e, input) => {
+    this.setState({
+      input: input
+    })
+  }
+
   getEvents = () => {
-    const city = this.refs.city.input.value
+    const city = this.state.input;
     let base_url = this.urls.root + `events.json?city=${city}&segmentId=KZFzniwnSyZfZ7v7nJ&size=100&source=ticketmaster&sort=date,asc&apikey=${config.MY_API_TOKEN}`;
     var myInit = {
       method: 'GET',
@@ -76,6 +82,7 @@ class App extends Component {
       })
   }
 
+
   render() {
     const { images } = this.state
     const { artist } = this.state
@@ -94,37 +101,16 @@ class App extends Component {
         fontWeight: '100',
         textTransform: 'uppercase',
       },
-      scroll: {
-        overflow: 'auto',
-        alignItems: 'center',
-        display: 'flex',
-        flex: 1,
-      },
       container: {
         flex: 1,
         display: 'inline-flex',
         flexDirection: 'column',
       },
-      reactCard: {
-        position: 'none',
-      },
-      form: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        color: 'white',
-        textAlign: 'center'
-      },
-      input: {
-        color: 'black',
-        fontSize: '18px',
-        textAlign: 'center'
-      },
-      formButton: {
-        size: '1em',
-        color: 'black',
-        margin: '.25em',
+      scroll: {
+        overflow: 'auto',
         alignItems: 'center',
-        border: 'black'
+        display: 'flex',
+        flex: 1,
       },
       paper: {
         paddingTop: '2em',
@@ -138,12 +124,12 @@ class App extends Component {
       <div className="App" style={styles.app}>
         <MuiThemeProvider>
           <div>
-            <HandleUser />
+            <HandleUser getEvents={this.getEvents} />
             <Logo />
-            <form style={styles.form} noValidate autoComplete='off'>
-                <TextField style={styles.input} ref='city'type='text' id='serch' inputStyle={styles.input} underlineFocusStyle={{borderColor: 'black'}} floatingLabelStyle={styles.input} underlineStyle={{bottom: '4px', color: 'black'}} />
-              <RaisedButton style={styles.formButton} buttonStyle={{ border: ' 1px solid black' }} onClick={this.getEvents} label='Search by City' labelPosition='before' icon={<i style={{color: 'black'}} className="material-icons">search</i>}/>
-                </form> 
+            <Form 
+              handleFormChange={this.handleFormChange}
+              getEvents={this.getEvents} 
+            />
             <div style={styles.scroll}>
               <div style={styles.container}>
                 <Paper style={styles.paper} zDepth={1} rounded={false}>

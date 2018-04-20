@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 class Images extends Component {
   render () {
     const { images } = this.props
-
+    
     const styles = {
     imgFlex: {
       display: 'flex',
@@ -26,7 +26,7 @@ class Images extends Component {
         marginBottom: '1em'
       }
     }
-    
+
     return ( 
       <div style={styles.imgFlex}>
       {
