@@ -31,7 +31,7 @@ class App extends Component {
 
   getEvents = () => {
     const city = this.state.input;
-    let base_url = this.urls.root + `events.json?city=${city}&segmentId=KZFzniwnSyZfZ7v7nJ&size=100&source=ticketmaster&sort=date,asc&apikey=${config.MY_API_TOKEN}`;
+    let base_url = this.urls.root + `events.json?city=${city}&segmentId=KZFzniwnSyZfZ7v7nJ&size=50&source=ticketmaster&sort=date,asc&apikey=${config.MY_API_TOKEN}`;
     var myInit = {
       method: 'GET',
       cache: 'default',
