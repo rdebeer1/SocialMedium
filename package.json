@@ -2,6 +2,7 @@
   "name": "my-event-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://rdebeer1.github.io/SocialMedium",
   "dependencies": {
     "antd": "^3.4.1",
     "axios": "^0.18.0",
@@ -31,10 +32,14 @@
     "session-memory-store": "^0.2.2"
   },
   "scripts": {
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "server-dev": "nodemon src/server.js",
+    "server-dev": "nodemon src/server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }
