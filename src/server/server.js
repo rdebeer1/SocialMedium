@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/database.js');
-const helpers = require('./backendHelpers.js');
+const helpers = require('../backend/backendHelpers.js');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const path = require('path')
@@ -27,6 +27,9 @@ app.use(session({
   saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection, ttl: 60 })
 }));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.post('/createAccount', function(req, res) { 
   helpers.hashPassword(req.body)
